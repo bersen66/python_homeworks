@@ -1,0 +1,38 @@
+#!/bin/python
+import click
+import sys
+
+
+def do_wc(istream, stats):
+    for line in istream:
+        words = line.split()
+        stats[2] += len(line.encode('utf-8'))
+        stats[1] += len(words)
+        stats[0] += 1
+
+
+@click.command()
+@click.option('-f', '--filenames', multiple=True, default=['stdin'])
+def wc_main(filenames):
+    file = sys.stdin
+    total_stats = [0, 0, 0]
+
+    if filenames[0] == 'stdin':
+        do_wc(file, total_stats)
+    else:
+        for filename in filenames:
+            with open(filename, 'r') as file:
+                curr_stats = [0, 0, 0]
+                do_wc(file, curr_stats)
+
+                click.echo(f"{curr_stats[0]} {curr_stats[1]} {curr_stats[2]} {filename}")
+                for i in range(3):
+                    total_stats[i] += curr_stats[i]
+
+    if filenames[0] == "stdin" or len(filenames) > 1:
+        click.echo(f"{total_stats[0]} {total_stats[1]} {total_stats[2]} Итого")
+
+
+
+if __name__ == '__main__':
+    wc_main()

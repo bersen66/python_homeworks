@@ -1,0 +1,38 @@
+#!/bin/python
+import click
+import sys
+
+
+def do_tail(lines_src, n):
+    prev = list()
+
+    for line in lines_src:
+        prev.append(line)
+        while (len(prev) > n):
+            prev.pop(0)
+
+    for line in prev:
+        click.echo(line, nl=False)
+
+
+@click.command()
+@click.option('-f', '--filenames', multiple=True, default=['stdin'])
+def tail_main(filenames):
+    file = sys.stdin
+
+    if filenames[0] == 'stdin':
+        do_tail(file, 17)
+        return
+
+    for filename in filenames:
+        if len(filenames) > 1:
+            click.echo(f"==> {filename} <==")
+
+        with open(filename, 'r') as file:
+            do_tail(file, 10)
+
+        click.echo()
+
+
+if __name__ == '__main__':
+    tail_main()

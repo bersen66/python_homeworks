@@ -1,0 +1,32 @@
+#!/bin/python
+
+import click
+from sys import stdin
+
+
+def nl_stdin():
+    counter = 1
+    for line in stdin:
+        click.echo(f"{counter}) {line}", nl=False)
+        counter += 1
+
+
+def nl_file(file):
+    counter = 1
+    with open(file, 'r') as f:
+        for line in f:
+            click.echo(f'{counter}) {line}', nl=False)
+            counter += 1
+
+
+@click.command()
+@click.option('-f', '--file', default='stdin')
+def run_nl(file):
+    if (file == 'stdin'):
+        nl_stdin()
+    else:
+        nl_file(file)
+
+
+if __name__ == '__main__':
+    run_nl()

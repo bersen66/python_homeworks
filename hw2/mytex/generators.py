@@ -56,6 +56,15 @@ def simple_document(func):
     return wrapper
 
 
+def make_table(func):
+    def wrapper(*args, **kwargs):
+        yield f"\\begin{{table}}[h!]"
+        for line in func(*args, **kwargs):
+            yield line
+        yield f"\\end{{table}}"
+    return wrapper
+
+
 class Chain:
     def __init__(self, func, /, *args, **kwargs):
         self.funcs = list()

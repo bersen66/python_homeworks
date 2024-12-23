@@ -1,4 +1,4 @@
-import mytex.generators as mt
+import mytex as mt
 
 
 def create_artifact_table(path):

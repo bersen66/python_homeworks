@@ -1,0 +1,5 @@
+FROM ubuntu:22.04
+
+RUN apt-get update -y && apt-get install texlive -y
+COPY images images
+CMD ["pdflatex", "--output-directory=artifacts" ,"artifacts/from_docker.tex"]

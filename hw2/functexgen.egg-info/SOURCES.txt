@@ -1,7 +1,0 @@
-setup.py
-functexgen.egg-info/PKG-INFO
-functexgen.egg-info/SOURCES.txt
-functexgen.egg-info/dependency_links.txt
-functexgen.egg-info/top_level.txt
-mytex/__init__.py
-mytex/generators.py
